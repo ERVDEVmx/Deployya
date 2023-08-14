@@ -48,6 +48,24 @@ app.post('/add', function (req, res) {
     res.send(db.get('users').value());
 });
 
+// Middleware to log every request
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} request to ${req.url}`);
+    next(); // move on to the next midleware or route handler
+});
+
+app.use(bodyParser.json());
+
+// Respond to GET requests for /accounts
+app.get('/accounts', function (req, res) {
+    res.send(db.get('users').value());
+});
+
+// Respond to POST requests for /accounts
+app.post('/accounts', function (req, res) {
+    res.send(db.get('users').value());
+});
+
 // start server
 // -----------------------
 app.listen(port, function () {
